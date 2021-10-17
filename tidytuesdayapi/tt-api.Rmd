@@ -1,0 +1,218 @@
+---
+title: "Tidy Tuesday API"
+subtitle: "Build and Deploy a Plumber API"  
+author: "Andrew Bates"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo(primary_color = "#1F4257", secondary_color = "#F97B64")
+```
+
+## Tidy Tuesday Project
+
+> A weekly data project aimed at the R ecosystem. 
+
+<br/>
+<br/>
+
+Run by **Tom Mock** and the **R4DS Online Learning Community**
+
+<br/>
+
+A new data set is published every week. Post content on Twitter with
+ **#TidyTuesday**.
+
+---
+## Plumber
+
+> Turn your R code into a web API
+
+<br/>
+
+```{r plumber-add, eval = FALSE}
+#* Return the sum of two numbers
+#* @param a The first number to add
+#* @param b The second number to add
+#* @post /sum
+function(a, b) {
+  as.numeric(a) + as.numeric(b)
+}
+```
+
+---
+class: inverse, center, middle
+
+## Tidy Tuesday + Plumber = Tidy Tuesday API
+
+---
+class: center, middle
+
+## What is an API?
+
+
+???
+
+machine to machine communication over the internet
+
+show how to access TT API in browser
+
+
+---
+## Why?
+
+contrib to community
+data sets for non-R users
+resume bullet point
+fun!
+
+---
+## How
+
+- Data sets stored in [mongo DB](https://www.mongodb.com/) database
+- API fetches/sends results
+- API hosted on [Digital Ocean](https://www.digitalocean.com/)
+
+???
+
+shout out to plumberDeploy!
+
+---
+## Mongo DB
+
+- Document database (NoSQL)
+- More flexible structure vs. tables
+- Connect from R via [`{mongolite}`](https://jeroen.github.io/mongolite/)
+
+--
+
+.pull-left[
+**SQL**
+
+- database
+- table
+- record/row
+]
+
+.pull-right[
+**mongo DB**
+
+- database
+- collection
+- document
+]
+
+
+---
+## API
+
+show code
+how does it work
+what are the endpoints
+etc.
+
+---
+## Digital Ocean + plumberDeploy
+
+what is digital ocean
+what is a droplet
+what is plumberDeploy
+how does it help
+
+---
+class: inverse, center, middle
+
+## Problems
+
+problems i ran into
+maybe think of a better word (issues?)
+
+---
+## Mongo DB
+
+oh the troubles i've seen...
+
+data too big
+spent **a lot** of time searching for a solution (Azure cosmos db, Amazon
+ dynamo? db, etc., etc.)
+eventually used mongo large file system (what's it called?, how is it different?)
+
+---
+## API
+
+cors
+how to handle db connections?
+mongolite
+
+---
+## Digital Ocean
+
+plumberDeploy
+what are some of the issues I came across?
+how did i overcome them?
+
+---
+class: inverse, center, middle
+## title to break things up
+
+---
+## What I learned
+
+stress: i didn't know much going into this. only that plumber looked simple
+ enough and that it was probably possible
+
+mongodb, document databases
+plumber
+deploying
+digital ocean
+domain name
+
+---
+## Why I'm sharing
+
+maybe you want to make a plumber api
+show that it's not all rainbows and unicorns
+hopefully help motivate to do side projects, especially for newer folks
+yes, it may be hard, but that doesn't mean you shouldn't try
+
+---
+## Resources
+
+links to tidy tuesday
+links to tt api
+links to some docs (i.e. plumber, plumberDeploy)
+link to this talk (have at beginning too. title slide probably)
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R packages:
+
+[**xaringan**](https://github.com/yihui/xaringan)<br>
+[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).

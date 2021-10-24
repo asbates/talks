@@ -119,19 +119,73 @@ shout out to plumberDeploy!
 
 ---
 ## API
+&lt;!-- show code --&gt;
+&lt;!-- how does it work --&gt;
+&lt;!-- what are the endpoints --&gt;
+&lt;!-- etc. --&gt;
+.pull-left[
 
-show code
-how does it work
-what are the endpoints
-etc.
+```r
+#* @get /available
+function(req, res, limit = 10L) {
+  
+  collection &lt;- mongo(
+    collection = "available",
+    db = "metadata",
+    url = Sys.getenv("DB_CONNECTION_URI")
+  )
+
+  available &lt;- collection$find(
+    query = '{}',
+    fields = '{"_id": false}',
+    sort = '{"date": -1}',
+    limit = limit
+  )
+  collection$disconnect()
+
+  available
+}
+```
+]
+
+.pull-right[
+
+```r
+#* @get /data
+function(req, res, date){
+
+  fs &lt;- gridfs(
+    db = "data",
+    url = Sys.getenv("DB_CONNECTION_URI")
+  )
+  
+  
+  raw_doc &lt;- fs$read(date, progress = FALSE)
+  unserialize(raw_doc$data)
+  
+  fs$disconnect()
+
+  doc
+}
+```
+
+]
 
 ---
 ## Digital Ocean + plumberDeploy
 
-what is digital ocean
-what is a droplet
-what is plumberDeploy
-how does it help
+
+[Digital Ocean](https://www.digitalocean.com/) is a cloud provider
+
+Databases, app platform, servers (droplets)
+
+[plumberDeploy](https://github.com/meztez/plumberDeploy) is an R package to
+ deploy your plumber API to cloud providers, from R.
+
+&lt;!-- what is digital ocean --&gt;
+&lt;!-- what is a droplet --&gt;
+&lt;!-- what is plumberDeploy --&gt;
+&lt;!-- how does it help --&gt;
 
 ---
 class: inverse, center, middle
@@ -139,31 +193,49 @@ class: inverse, center, middle
 ## Problems
 
 problems i ran into
-maybe think of a better word (issues?)
+&lt;!-- maybe think of a better word (issues?) --&gt;
 
 ---
 ## Mongo DB
 
-oh the troubles i've seen...
+Oh the troubles i've seen...
 
-data too big
-spent **a lot** of time searching for a solution (Azure cosmos db, Amazon
- dynamo? db, etc., etc.)
-eventually used mongo large file system (what's it called?, how is it different?)
+Data too big!
+
+spent **a lot** of time searching for a solution (Azure Cosmos DB, Amazon
+ DynamoDB, ...)
+
+Eventually landed on mongodb **gridFS**
+
+
+???
+
+mongodb document size limit: 16MB
 
 ---
 ## API
 
-cors
-how to handle db connections?
-mongolite
+cors (is it ok to set it to *?)
+
+how to handle db connections? (one connection? overhead of connect/disconnect in request)
+
+mongolite (user permissions in db b/c C library was trying to create index, but need
+ write access to make index)
 
 ---
-## Digital Ocean
+## Digital Ocean/Deployment
 
-plumberDeploy
-what are some of the issues I came across?
-how did i overcome them?
+linux system errors when provisioning server (tried again next day and it worked!)
+
+.Renviron didn't deploy with app (had to ssh in and create)
+
+deployed api but test api was already on that port so problems
+
+how to get a domain name? what is DNS? CNAME? certificate?
+
+&lt;!-- plumberDeploy --&gt;
+&lt;!-- what are some of the issues I came across? --&gt;
+&lt;!-- how did i overcome them? --&gt;
 
 ---
 class: inverse, center, middle

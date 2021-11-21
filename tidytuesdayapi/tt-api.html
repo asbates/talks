@@ -9,18 +9,32 @@
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
 
-# Tidy Tuesday API
-## Build and Deploy a Plumber API
+
+class: center, middle
+
+&lt;!-- putting title slide below code chunks was causing the 'class: center' to show --&gt;
+&lt;!--  up on the slide so put it here --&gt;
+
+## Tidy Tuesday API
+
 ### Andrew Bates
 
+Slides on GitHub: `asbates/talks/tidytuesdayapi`
+
+
+
+
+
+&lt;style type="text/css"&gt;
+/* don't show slide numbers */
+.remark-slide-number {
+  opacity: 0;
+}
+&lt;/style&gt;
+
+
 ---
-
-
-
-
-
 
 ## Tidy Tuesday Project
 
@@ -55,7 +69,7 @@ function(a, b) {
 ```
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 ## Tidy Tuesday + Plumber = Tidy Tuesday API
 
@@ -75,17 +89,20 @@ show how to access TT API in browser
 ---
 ## Why?
 
-contrib to community
-data sets for non-R users
-resume bullet point
-fun!
+Contribute to community (R, Python, JavaScript, ...)
+
+Resume bullet point
+
+Fun!
 
 ---
 ## How
 
-- Data sets stored in [mongo DB](https://www.mongodb.com/) database
-- API fetches/sends results
-- API hosted on [Digital Ocean](https://www.digitalocean.com/)
+Data sets stored in [mongo DB](https://www.mongodb.com/) database
+
+API fetches/sends results
+
+API hosted on [Digital Ocean](https://www.digitalocean.com/)
 
 ???
 
@@ -94,9 +111,11 @@ shout out to plumberDeploy!
 ---
 ## Mongo DB
 
-- Document database (NoSQL)
-- More flexible structure vs. tables
-- Connect from R via [`{mongolite}`](https://jeroen.github.io/mongolite/)
+Document database (NoSQL)
+
+More flexible structure vs. tables
+
+Connect from R via [`{mongolite}`](https://jeroen.github.io/mongolite/)
 
 --
 
@@ -105,7 +124,7 @@ shout out to plumberDeploy!
 
 - database
 - table
-- record/row
+- record
 ]
 
 .pull-right[
@@ -119,10 +138,7 @@ shout out to plumberDeploy!
 
 ---
 ## API
-&lt;!-- show code --&gt;
-&lt;!-- how does it work --&gt;
-&lt;!-- what are the endpoints --&gt;
-&lt;!-- etc. --&gt;
+
 .pull-left[
 
 ```r
@@ -177,23 +193,18 @@ function(req, res, date){
 
 [Digital Ocean](https://www.digitalocean.com/) is a cloud provider
 
-Databases, app platform, servers (droplets)
-
 [plumberDeploy](https://github.com/meztez/plumberDeploy) is an R package to
  deploy your plumber API to cloud providers, from R.
 
-&lt;!-- what is digital ocean --&gt;
-&lt;!-- what is a droplet --&gt;
-&lt;!-- what is plumberDeploy --&gt;
-&lt;!-- how does it help --&gt;
+???
+
+Digital Ocean: database, app platform, servers
 
 ---
 class: inverse, center, middle
 
-## Problems
+## Issues
 
-problems i ran into
-&lt;!-- maybe think of a better word (issues?) --&gt;
 
 ---
 ## Mongo DB
@@ -202,7 +213,7 @@ Oh the troubles i've seen...
 
 Data too big!
 
-spent **a lot** of time searching for a solution (Azure Cosmos DB, Amazon
+Spent **a lot** of time searching for a solution (Azure Cosmos DB, Amazon
  DynamoDB, ...)
 
 Eventually landed on mongodb **gridFS**
@@ -215,59 +226,60 @@ mongodb document size limit: 16MB
 ---
 ## API
 
-cors (is it ok to set it to *?)
+CORS
 
-how to handle db connections? (one connection? overhead of connect/disconnect in request)
+How to handle database connections?
 
-mongolite (user permissions in db b/c C library was trying to create index, but need
- write access to make index)
+Permissions issues with `mongolite`
+
+ 
+???
+
+CORS: can I set it to '*'? what kind of risk?
+
+DB connections: one connection? one connection for each request? will that be
+  too much overhead?
+  
+mongolite: C library trying to create index, but need write access to add 
+ index =&gt; had to adjust permissions for server NOT EASY TO DEBUG
+
 
 ---
 ## Digital Ocean/Deployment
 
-linux system errors when provisioning server (tried again next day and it worked!)
+Linux system errors
 
-.Renviron didn't deploy with app (had to ssh in and create)
+`.Renviron` didn't deploy with app
 
-deployed api but test api was already on that port so problems
 
-how to get a domain name? what is DNS? CNAME? certificate?
+Domain name: 🤷
 
-&lt;!-- plumberDeploy --&gt;
-&lt;!-- what are some of the issues I came across? --&gt;
-&lt;!-- how did i overcome them? --&gt;
+
+???
+
+Linux system: when first provisioned server, got errors I didn't understand.
+ tried again next day and it worked ?
+
+ 
+domain name: How to get one? What is DNS? CNAME? A certificate?
 
 ---
 class: inverse, center, middle
-## title to break things up
+## YOU CAN DO IT!
 
----
-## What I learned
+???
 
-stress: i didn't know much going into this. only that plumber looked simple
- enough and that it was probably possible
+stress: I struggled *a lot*. But I learned *a lot*. You're going to run into
+ issues, but that's all part of it.
+ 
+I knew next to nothing going in. I learned about
 
-mongodb, document databases
-plumber
-deploying
-digital ocean
-domain name
+- mongodb
+- plumber
+- digital ocean
+- domain names
+- ...
 
----
-## Why I'm sharing
-
-maybe you want to make a plumber api
-show that it's not all rainbows and unicorns
-hopefully help motivate to do side projects, especially for newer folks
-yes, it may be hard, but that doesn't mean you shouldn't try
-
----
-## Resources
-
-links to tidy tuesday
-links to tt api
-links to some docs (i.e. plumber, plumberDeploy)
-link to this talk (have at beginning too. title slide probably)
 
 ---
 class: center, middle

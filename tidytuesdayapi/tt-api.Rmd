@@ -5,6 +5,7 @@ author: "Andrew Bates"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
+    seal: false
     nature:
       slideNumberFormat: "%current%"
       highlightStyle: github
@@ -12,6 +13,17 @@ output:
       ratio: 16:9
       countIncrementalSlides: true
 ---
+
+class: center, middle
+
+<!-- putting title slide below code chunks was causing the 'class: center' to show -->
+<!--  up on the slide so put it here -->
+
+## Tidy Tuesday API
+
+### Andrew Bates
+
+Slides on GitHub: `asbates/talks/tidytuesdayapi`
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -30,6 +42,16 @@ knitr::opts_chunk$set(
 library(xaringanthemer)
 style_duo(primary_color = "#1F4257", secondary_color = "#F97B64")
 ```
+
+```{css, echo = FALSE}
+/* don't show slide numbers */
+.remark-slide-number {
+  opacity: 0;
+}
+```
+
+
+---
 
 ## Tidy Tuesday Project
 
@@ -63,7 +85,7 @@ function(a, b) {
 ```
 
 ---
-class: inverse, center, middle
+class: center, middle
 
 ## Tidy Tuesday + Plumber = Tidy Tuesday API
 
@@ -83,17 +105,20 @@ show how to access TT API in browser
 ---
 ## Why?
 
-contrib to community
-data sets for non-R users
-resume bullet point
-fun!
+Contribute to community (R, Python, JavaScript, ...)
+
+Resume bullet point
+
+Fun!
 
 ---
 ## How
 
-- Data sets stored in [mongo DB](https://www.mongodb.com/) database
-- API fetches/sends results
-- API hosted on [Digital Ocean](https://www.digitalocean.com/)
+Data sets stored in [mongo DB](https://www.mongodb.com/) database
+
+API fetches/sends results
+
+API hosted on [Digital Ocean](https://www.digitalocean.com/)
 
 ???
 
@@ -102,9 +127,11 @@ shout out to plumberDeploy!
 ---
 ## Mongo DB
 
-- Document database (NoSQL)
-- More flexible structure vs. tables
-- Connect from R via [`{mongolite}`](https://jeroen.github.io/mongolite/)
+Document database (NoSQL)
+
+More flexible structure vs. tables
+
+Connect from R via [`{mongolite}`](https://jeroen.github.io/mongolite/)
 
 --
 
@@ -113,7 +140,7 @@ shout out to plumberDeploy!
 
 - database
 - table
-- record/row
+- record
 ]
 
 .pull-right[
@@ -127,10 +154,7 @@ shout out to plumberDeploy!
 
 ---
 ## API
-<!-- show code -->
-<!-- how does it work -->
-<!-- what are the endpoints -->
-<!-- etc. -->
+
 .pull-left[
 ```{r avail, eval = FALSE}
 #* @get /available
@@ -183,23 +207,18 @@ function(req, res, date){
 
 [Digital Ocean](https://www.digitalocean.com/) is a cloud provider
 
-Databases, app platform, servers (droplets)
-
 [plumberDeploy](https://github.com/meztez/plumberDeploy) is an R package to
  deploy your plumber API to cloud providers, from R.
 
-<!-- what is digital ocean -->
-<!-- what is a droplet -->
-<!-- what is plumberDeploy -->
-<!-- how does it help -->
+???
+
+Digital Ocean: database, app platform, servers
 
 ---
 class: inverse, center, middle
 
-## Problems
+## Issues
 
-problems i ran into
-<!-- maybe think of a better word (issues?) -->
 
 ---
 ## Mongo DB
@@ -208,7 +227,7 @@ Oh the troubles i've seen...
 
 Data too big!
 
-spent **a lot** of time searching for a solution (Azure Cosmos DB, Amazon
+Spent **a lot** of time searching for a solution (Azure Cosmos DB, Amazon
  DynamoDB, ...)
 
 Eventually landed on mongodb **gridFS**
@@ -221,59 +240,60 @@ mongodb document size limit: 16MB
 ---
 ## API
 
-cors (is it ok to set it to *?)
+CORS
 
-how to handle db connections? (one connection? overhead of connect/disconnect in request)
+How to handle database connections?
 
-mongolite (user permissions in db b/c C library was trying to create index, but need
- write access to make index)
+Permissions issues with `mongolite`
+
+ 
+???
+
+CORS: can I set it to '*'? what kind of risk?
+
+DB connections: one connection? one connection for each request? will that be
+  too much overhead?
+  
+mongolite: C library trying to create index, but need write access to add 
+ index => had to adjust permissions for server NOT EASY TO DEBUG
+
 
 ---
 ## Digital Ocean/Deployment
 
-linux system errors when provisioning server (tried again next day and it worked!)
+Linux system errors
 
-.Renviron didn't deploy with app (had to ssh in and create)
+`.Renviron` didn't deploy with app
 
-deployed api but test api was already on that port so problems
 
-how to get a domain name? what is DNS? CNAME? certificate?
+Domain name: `r emo::ji("shrug")`
 
-<!-- plumberDeploy -->
-<!-- what are some of the issues I came across? -->
-<!-- how did i overcome them? -->
+
+???
+
+Linux system: when first provisioned server, got errors I didn't understand.
+ tried again next day and it worked ?
+
+ 
+domain name: How to get one? What is DNS? CNAME? A certificate?
 
 ---
 class: inverse, center, middle
-## title to break things up
+## YOU CAN DO IT!
 
----
-## What I learned
+???
 
-stress: i didn't know much going into this. only that plumber looked simple
- enough and that it was probably possible
+stress: I struggled *a lot*. But I learned *a lot*. You're going to run into
+ issues, but that's all part of it.
+ 
+I knew next to nothing going in. I learned about
 
-mongodb, document databases
-plumber
-deploying
-digital ocean
-domain name
+- mongodb
+- plumber
+- digital ocean
+- domain names
+- ...
 
----
-## Why I'm sharing
-
-maybe you want to make a plumber api
-show that it's not all rainbows and unicorns
-hopefully help motivate to do side projects, especially for newer folks
-yes, it may be hard, but that doesn't mean you shouldn't try
-
----
-## Resources
-
-links to tidy tuesday
-links to tt api
-links to some docs (i.e. plumber, plumberDeploy)
-link to this talk (have at beginning too. title slide probably)
 
 ---
 class: center, middle

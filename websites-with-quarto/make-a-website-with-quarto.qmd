@@ -1,0 +1,49 @@
+---
+title: "Making websites with Quarto"
+subtitle: "Central Valley Data Analytics and R Users"
+author: "Andrew Bates"
+format: 
+  revealjs:
+    theme: moon
+---
+
+## What is Quarto?
+
+> An open-source scientific and technical publishing system.
+
+## What does that mean?
+
+- Open-source
+    - Source code is publicly available
+    - Free
+- Scientific and technical
+    - Equations, graphs, citations
+    - Include code or code output
+- Publishing
+    - Document creation (pdf, HTML, Word)
+    - Journal templates
+    - Quarto Pub is a free publishing platform
+
+## What can you make with it?
+
+- Websites
+- Presentations (like this one)
+- Books
+
+## Websites
+
+- Blogs
+- Software documentation
+- Courses
+- Portfolio
+
+## Examples
+
+::: {.notes}
+- https://quarto.org/docs/gallery/#websites
+    - https://nbdev.fast.ai/
+    - https://sta210-s22.github.io/website/
+    - https://beamilz.com/
+- https://asbates.quarto.pub/team-6/
+:::
+
